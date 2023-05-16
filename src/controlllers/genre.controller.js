@@ -1,5 +1,4 @@
 import { Genre } from "../model/genre";
-import { validateGenre } from "../validations/genre.validation";
 
 const getAllGenre = async (req, res) => {
   try {
@@ -10,4 +9,18 @@ const getAllGenre = async (req, res) => {
   }
 };
 
-export { getAllGenre };
+const addGenre = async (req, res) => {
+  try {
+    const { name } = req.body;
+    let genre = new Genre({
+      name,
+    });
+    await genre.save();
+
+    return res.status(201).json({ message: "Genre created successful", genre });
+  } catch (err) {
+    return res.status(500).json({ error: err, message: "Server error" });
+  }
+};
+
+export { getAllGenre, addGenre };
